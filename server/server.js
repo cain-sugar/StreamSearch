@@ -8,9 +8,9 @@ const FileStore = require('session-file-store')(session);
 const uuid = require('uuid/v4');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const db = require('../database/index.js');
-const utellySample = require('../sampledata/utelly.json');
 const LocalStrategy = require('passport-local').Strategy;
+const db = require('../database/index.js');
+const utellySample = require('../sampledata/utelly');
 
 
 // add and configure middleware
@@ -36,55 +36,48 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-const users = [{ id: 983, username: 'tonild', password: 'erika31' }];
+// const users = [{ id: 983, username: 'tonild', password: 'erika31' }];
 
 
 // passport strategy to authenticate username and password
 passport.use(new LocalStrategy({
   usernameField: 'username',
   passwordField: 'password',
-}, (username, password, callback) => {
-  // db.findOne({ username, password })
-  //   .then((user) => {
-  //     if (!user) {
-  //       return callback(null, false, { message: 'Incorrect username or password' });
-  //     }
-        // if (!bcrypt.compareSync(password, user.password)) {
-        //   return callback(null, false, { message: 'Incorrect password'})
-        // } else {
-          //     return callback(null, user, { message: 'logged in successfully' });
-        // }
-  //   })
-  //   .catch((err) => {
-  //     callback(err);
-  //   });
-  const user = users[0];
-  if (username === user.username && password === user.password) {
-    return callback(null, user);
-  }
+}, (username, password, done) => {
+  db.User.findOne({ username })
+    .then((user) => {
+      if (user.user_name !== username) {
+        return done(null, false, { message: 'Incorrect username or password' });
+      }
+      if (!bcrypt.compare(password, user.hashed_password)) {
+        return done(null, false, { message: 'Incorrect password' });
+      }
+      return done(null, user, { message: 'logged in successfully' });
+    });
+  // const user = users[0];
+  // if (username === user.username && password === user.password) {
+  //   return callback(null, user);
+  // }
 }));
 
 // user id is saved to the session file store here
-passport.serializeUser((user, callback) => {
-  callback(null, user.id); // id_user
+passport.serializeUser((user, done) => {
+  return done(null, user.id_user); // id_user
 });
 
 // the user id passport is saved in the session file
 // retrieves the user profile based on id
-passport.deserializeUser((id, callback) => {
+// when the id is needed later, passport will use this id to retrieve the user from the db
+passport.deserializeUser((id, done) => {
   console.log('Inside deserializeUser callback');
   console.log(`The user id passport saved in the session file store is: ${id}`);
-  // db.get({ id })
-  //   .then((response) => {
-  //     callback(null, response.data);
-  //   })
-  //   .catch((err) => {
-  //     if (err) {
-  //       console.log(err);
-  //     }
-  //   });
-  const user = users[0].id === id ? users[0] : false;
-  callback(null, user);
+  db.User.findById(id)
+    .then((response) => {
+      return done(null, response);
+    });
+  // request.session.passport.user
+  // const user = users[0].id === id ? users[0] : false;
+  // callback(null, user);
 });
 
 // uses the get method to see if a user is authenticated to view certain pages
@@ -104,8 +97,8 @@ app.get('/', (request, response) => {
 // uses local strategy to login
 app.post('/login', (req, res, callback) => {
   passport.authenticate('local', (err, user, info) => {
-    if (info) {
-      return res.send(info.message);
+    if (user) {
+      return res.send(user);
     }
     if (err) {
       return callback(err);
@@ -117,7 +110,6 @@ app.post('/login', (req, res, callback) => {
       if (error) {
         return callback(error);
       }
-      res.redirect('/authrequired');
     });
   })(req, res);
 });
@@ -131,22 +123,25 @@ app.post('/signup', (req, res) => {
   console.log(req.sessionID);
   console.log(req.body);
   //Services//////////////////////////////////////////////
-  let services = req.body.services;
-  const crunchyroll = services.crunchyroll;
-  const googleplay = services.googleplay;
-  const hulu = services.hulu;
-  const iTunes = services.iTunes;
-  const netflix = services.netflix;
-  const primevideo = services.primevideo;
 
-  db.Service.create({
-    service_crunchyroll: crunchyroll,
-    service_googleplay: googleplay,
-    service_hulu: hulu,
-    service_iTunes: iTunes,
-    service_netflix: netflix,
-    service_primevideo: primevideo
-  });
+
+  // db.Service.create({
+  //   service_crunchyroll: crunchyroll,
+  //   service_googleplay: googleplay,
+  //   service_hulu: hulu,
+  //   service_iTunes: iTunes,
+  //   service_netflix: netflix,
+  //   service_primevideo: primevideo
+  // });
+
+  // let services = req.body.services;
+  // const crunchyroll = services.crunchyroll;
+  // const googleplay = services.googleplay;
+  // const hulu = services.hulu;
+  // const iTunes = services.iTunes;
+  // const netflix = services.netflix;
+  // const primevideo = services.primevideo;
+
   //////////////////////////////////////////////////////////
   //Users///////////////////////////////////////////////////
   let username = req.body.username;
