@@ -9,13 +9,18 @@
 <div>
   <form action='/login' id='loginPage'>
     <table></table>
-      <input ng-model="$ctrl.username" class="form-control mr-sm-1" type="text" style="width: 50%" placeholder="Username" required /><br>
-      <input ng-model="$ctrl.password" class="form-control mr-sm-1" type="text" style="width: 50%" placeholder="Password" required /><br>
-      <button type='button' ng-click='$ctrl.login()'>Login</button>
+    <h3 class='login-header'>Login</h3>
+    <img ng-src="assets/serviceLogos/login-signup-background.png" class="login-signup-img">
+    <img ng-src="assets/serviceLogos/grey-bod-top.png" class="login-signup-img-two">
+      <input class="centered-text-username grey lighten-4" ng-model="$ctrl.username"  type="text" style="width: 30%" placeholder="Username" required /><br>
+      <input class="centered-text-password grey lighten-4" ng-model="$ctrl.password"  type="text" style="width: 30%" placeholder="Password" required /><br>
+      <button class="waves-effect grey-text text-darken-4 amber accent-3 btn-large" type='button' ng-click='$ctrl.login()'>Login</button>
   </form>
 </div>
 
 
 <!-- ng-repeat="user in $ctrl.list"
+class="materialize-textarea"
+
 user="user"
 on-update="$ctrl.userInput(user, prop, info)" -->

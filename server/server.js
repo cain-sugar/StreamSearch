@@ -36,8 +36,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 const users = [{ id: 983, username: 'tonild', password: 'erika31' }];
+
 
 // passport strategy to authenticate username and password
 passport.use(new LocalStrategy({
@@ -125,7 +125,7 @@ app.post('/login', (req, res, callback) => {
 app.get('/login', (req, res) => {
   console.log(req.sessionID);
   res.send('logged in');
-})
+});
 
 app.post('/signup', (req, res) => {
   console.log(req.sessionID);

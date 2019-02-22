@@ -1,10 +1,17 @@
-<div class="service-checkbox">
-  <img ng-repeat-start="(service, hasService) in $ctrl.serviceList" 
-  service="service"
-  height=100 width=100 
-  src="assets/serviceLogos/{{service}}.png" />
-  <form ng-repeat-end>
-    <input type="checkbox" ng-model="$ctrl.serviceList[service]" />
-  </form>
-  <button ng-click="$ctrl.createUser($ctrl.serviceList)">Sign up!</button>
-</div>
+<ul class="collapsible">
+  <li>
+    <div class="collapsible-header">
+      <!-- <i></i> -->
+      Select your Services
+    </div>
+    <div class="collapsible-body">
+      <img ng-repeat="(service, hasService) in $ctrl.serviceList" service="service" height=60 width=relative
+        class="icon"
+        ng-src="assets/serviceLogos/{{service}}.png"
+        ng-click="$ctrl.click(service)"
+        ng-class="{'selected-service': $ctrl.serviceList[service]}"
+        />
+      <a ng-click="$ctrl.createUser($ctrl.serviceList)" class="waves-effect grey-text text-darken-4 amber accent-3 btn">Sign up!</a>
+    </div>
+  </li>
+</ul>

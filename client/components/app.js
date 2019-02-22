@@ -2,6 +2,7 @@ angular.module('app')
   .component('app', {
     bindings: {},
     controller() {
+      // this.data = window.data.Search;
       this.getUserData = (data) => {
       //  itemsService.getAll(function (data) {
       //  this.items = data;

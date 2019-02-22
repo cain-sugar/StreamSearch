@@ -1,36 +1,29 @@
 <div class="search">
-    <ul id="slide-out" class="sidenav">
-      <li><div class="user-view">
-        <div class="background">
-          <img src="https://media.giphy.com/media/hQKLmP8DTdOve/giphy.gif">
-        </div>
-        <a href="#user"><img class="circle" src="http://chittagongit.com//images/cool-anime-icon/cool-anime-icon-20.jpg"></a>
-        <a href="#name"><span class="white-text name">John Doe</span></a>
-        <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
-      </div></li>
-      <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-      <li><a href="#!">Second Link</a></li>
-      <li><div class="divider"></div></li>
-      <li><a class="subheader">Subheader</a></li>
-      <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-    </ul> 
-      <a href="/search" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+  <img ng-src="assets/serviceLogos/logo-cropped.png" class="logo-search-profile">
+  <sidebar></sidebar>
   <form class="search-form">
-    <input class="search-input" placeholder="Search by title" ng-model="searchTerm">
-    <input class="search-input" placeholder="...or by genre" ng-model="genre">
+    <input class="search-input-movie grey lighten-4" placeholder="Search by title" style="width: 40%" ng-model="searchTerm">
     <span>I'm looking for...</span>
     <p>
       <label>  
         <input name="group1" type="radio" ng-model="type" value="TV" checked />
-        <span>a TV show</span>
+        <span>A TV Show</span>
       </label>
     </p>
     <p>
       <label>
         <input name="group1" type="radio" ng-model="type" value="movie"/>
-        <span>a movie</span>
+        <span>A Movie</span>
       </label>
     </p>
   </form>
   <button ng-click="$ctrl.searchFor(searchTerm, type, genre)">Search the streams!</button>
+  
+  <div class="carousel" class={{$ctrl.ignore}}>
+      <a class="carousel-item" name="0" href="javascript:void(0);">{{$ctrl.data[0].title}}<img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[0].poster}}"></a>
+      <a class="carousel-item" name="1" href="javascript:void(0);">{{$ctrl.data[1].title}}<img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[1].poster}}"></a>
+      <a class="carousel-item" name="2" href="javascript:void(0);">{{$ctrl.data[2].title}}<img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[2].poster}}"></a>
+      <a class="carousel-item" name="3" href="javascript:void(0);">{{$ctrl.data[3].title}}<img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[3].poster}}"></a>
+      <a class="carousel-item" name="4" href="javascript:void(0);">{{$ctrl.data[4].title}}<img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[4].poster}}"></a>
+    </div>
 </div>

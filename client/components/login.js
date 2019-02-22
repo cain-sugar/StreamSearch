@@ -3,12 +3,13 @@ angular.module('app')
     bindings: {
       path: '<',
     },
-    controller(Serve) {
+    controller(Serve, $location) {
       this.username = null;
       this.password = null;
 
       this.login = () => {
-        console.log(`${this.username} is now logged in their password is ${this.password}`);
+        $location.path('search');
+        console.log(`logging in ${this.username}...`);
         Serve.login(this.username, this.password);
         //  itemsService.sendText(username, password);
       };

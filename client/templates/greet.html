@@ -1,7 +1,9 @@
 <div ng-if="$ctrl.path === '/'"><div class="image-container"></div>
 <h1>StreamSearch</h1>
-<a ui-sref="login" ui-sref-active="active">Login</a>
-<a ui-sref="signup" ui-sref-active="active">Signup</a>
-<a ui-sref="search" ui-sref-active="active">Search</a>
+<img ng-src="assets/serviceLogos/logo.png" class="logo">
+<br>
+<a ui-sref="login" class="greet" ng-style="{color:'#C59942'}" ui-sref-active="active">Login</a>
+<a ui-sref="signup" class="greet" ng-style="{color:'#C59942'}" ui-sref-active="active">Signup</a>
+<!-- <a ui-sref="search" class="greet" ng-style="{color:'#C59942'}" ui-sref-active="active">Search</a> -->
 </div>
 <div ui-view></div>

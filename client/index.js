@@ -37,12 +37,19 @@ angular.module('app', ['ui.router']).config(($stateProvider, $locationProvider) 
     component: 'search',
   };
 
+  const profileState = {
+    name: 'profile',
+    url: '/profile',
+    component: 'profile',
+  };
+
   $stateProvider.state(signupState);
   $stateProvider.state(loginState);
   $stateProvider.state(logoutState);
   $stateProvider.state(appState);
   $stateProvider.state(blankState);
   $stateProvider.state(searchState);
+  $stateProvider.state(profileState);
 });
 
 // 'itemsService'

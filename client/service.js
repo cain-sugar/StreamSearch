@@ -1,5 +1,4 @@
-// Look up requiring axios
-// const axios = require('axios');
+
 
 angular.module('app')
   .service('Serve', function Serve($http) {
@@ -8,74 +7,40 @@ angular.module('app')
         username, password,
       })
         .then((response) => {
-          console.log(response, 'login request worked');
+          console.log(response, `${username} succesfully logged in!`);
         })
         .catch((error) => {
-          console.error(error);
+          console.error(error, `failed to login ${username}`);
         });
     };
 
     this.signup = (username, fullname, password, country, services) => {
       $http.post('/signup', {
-        username, fullname, password, country, services
+        username, fullname, password, country, services,
       })
         .then((response) => {
-          console.log(response.data, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-          console.log('signup request worked');
+          console.log(response.data);
         })
         .catch((error) => {
-          console.error(error);
+          alert(error.data);
         });
     };
 
-    this.search = (query) => {
-      $http.post('/search', query)
-      .then((response) => {
-        console.log(response.data);
+    this.search = (query, callback) => {
+      console.log(query);
+      $http({
+        url: '/search',
+        params: query,
+        method: 'GET',
       })
-      .catch((error) => {
-        console.error(error);
-      })
-    } 
+        .then(callback)
+        .catch(callback);
+    };
+
+    // this.getInfo = (username) => {
+    //   console.log(username);
+    //   $http.get('/profile-load', username)
+    //     .then(console.log('cool'))
+    //     .catch(console.log('error'));
+    // };
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// app.config(function($routeProvider){
-//   $routeProvider
-//     .when('/', {
-//       templateUrl: 'Template.login.html'
-//     })
-//     .when('/dashboard', {
-//       templateUrl: 'dashboard.html'
-//     })
-//     .otherwise({
-//       redirectTo: '/'
-//     });
-// });
-
-// app.controller('loginCtrl', function($scope, $location){
-//   $scope.submit = function() {
-//     const username = $scope.username;
-//     const password = $scope.password;
-
-//     if($scope.username === 'kaelyn' && $scope.password === 'chresfield'){
-//       $location.path('/dashboard');
-//     } else{
-//       $location.path('/');
-//     }
-//   }
-// })

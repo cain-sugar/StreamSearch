@@ -1,6 +1,6 @@
 angular.module('app')
   .component('sidebar', {
-    templateUrl: 'templates/sidebar.html',
+    templateUrl: 'templates/sideBar.html',
     bindings: {},
     controller() {
       M.AutoInit();

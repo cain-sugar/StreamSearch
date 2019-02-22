@@ -1,11 +1,22 @@
 
 <div>
   <form action='/signup' id='signupPage'>
+    <h3 class='signin-header'>Sign Up</h3>
     <table>
-      <input ng-model='$ctrl.username' type='text' style="width: 50%" placeholder="Username" required /><br>
-      <input ng-model='$ctrl.fullname' type='text' style="width: 50%" placeholder="Full Name" required /><br>
-      <input ng-model='$ctrl.password' type='text' style="width: 50%" placeholder="Password" required /><br>
-      <input ng-model='$ctrl.country' type='text' style="width: 50%" placeholder="Country" required /><br>
+      <img ng-src="assets/serviceLogos/login-signup-background.png" class="login-signup-img">
+      <img ng-src="assets/serviceLogos/grey-bod-top.png" class="login-signup-img-two">
+      <input ng-model='$ctrl.username' type='text' style="width: 30%" placeholder="Username" class="centered-text-username grey-text text-darken-4 grey lighten-4" required /><br>
+      <input ng-model='$ctrl.fullname' type='text' style="width: 30%" placeholder="Full Name" class="centered-text-password grey-text text-darken-4 grey lighten-4" required /><br>
+      <input ng-model='$ctrl.password' type='text' style="width: 30%" placeholder="Password" class="centered-text-3 grey-text text-darken-4 grey lighten-4" required /><br>
+      <!-- <input ng-model='$ctrl.country' type='text' style="width: 30%" placeholder="Country" class="centered-text-4" required /><br> -->
+      <h5 class='country-header'>Country</h5>
+      <label class="label">
+        <input class="group1" type="radio" ng-model="$ctrl.country" value="US" checked />
+        <span>US</span>
+        <label class="label2">
+          <input class="group1" type="radio" ng-model="$ctrl.country" value="UK" />
+          <span>UK</span>
+        </label>
     </table>
   </form>
   <div>
