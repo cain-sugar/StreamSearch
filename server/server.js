@@ -36,8 +36,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-const users = [{ id: 983, username: 'tonild', password: 'erika31' }];
 
+const users = [{ id: 983, username: 'tonild', password: 'erika31' }];
 
 // passport strategy to authenticate username and password
 passport.use(new LocalStrategy({
