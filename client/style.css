@@ -1,0 +1,68 @@
+.selected-service {
+  height: 500px;
+}
+
+.logo {
+  height: 350px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: relative;
+  mix-blend-mode: lighten;
+}
+
+.greet{
+  float: middle;
+    margin-right: 70px;
+  font-size: 30px;
+  margin-left: 3.5em;
+}
+
+.carousel {
+  overflow: visible;
+  height: 100%;
+}
+
+.login-signup-img{
+  top: 15%;
+  left: 22%;
+  height: 500px;
+  width: relative;
+  position: absolute;
+  z-index: -500;
+}
+
+.login-signup-img-two{
+  top: 25%;
+  left: 25%;
+  position: absolute;
+  height: 400px;
+  opacity: 0.80;
+  color: gray;
+}
+
+.centered-text-username {
+  background-color: whitesmoke;
+  position: absolute;
+  top: 40%;
+  left: 30%;
+  /* transform: translate(-50%, -50%); */
+}
+
+.centered-text-password {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  /* transform: translate(-50%, -50%); */
+}
+
+.login-header {
+  position: absolute;
+  top: 13%;
+  left: 25%;
+  color: white;
+}
+
+/* .login-button {
+  color: #C59942;
+} */
