@@ -7,10 +7,9 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const uuid = require('uuid/v4');
 const bcrypt = require('bcrypt');
+const passport = require('passport');
 const db = require('../database/index.js');
 const utellySample = require('../sampledata/utelly.json');
-const local = require('./passport');
-const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 
@@ -39,6 +38,8 @@ app.use(passport.session());
 
 const users = [{ id: 983, username: 'tonild', password: 'erika31' }];
 
+
+// passport strategy to authenticate username and password
 passport.use(new LocalStrategy({
   usernameField: 'username',
   passwordField: 'password',
@@ -48,7 +49,11 @@ passport.use(new LocalStrategy({
   //     if (!user) {
   //       return callback(null, false, { message: 'Incorrect username or password' });
   //     }
-  //     return callback(null, user, { message: 'logged in successfully' });
+        // if (!bcrypt.compareSync(password, user.password)) {
+        //   return callback(null, false, { message: 'Incorrect password'})
+        // } else {
+          //     return callback(null, user, { message: 'logged in successfully' });
+        // }
   //   })
   //   .catch((err) => {
   //     callback(err);
@@ -65,18 +70,27 @@ passport.serializeUser((user, callback) => {
 });
 
 // the user id passport is saved in the session file
+// retrieves the user profile based on id
 passport.deserializeUser((id, callback) => {
   console.log('Inside deserializeUser callback');
   console.log(`The user id passport saved in the session file store is: ${id}`);
+  // db.get({ id })
+  //   .then((response) => {
+  //     callback(null, response.data);
+  //   })
+  //   .catch((err) => {
+  //     if (err) {
+  //       console.log(err);
+  //     }
+  //   });
   const user = users[0].id === id ? users[0] : false;
   callback(null, user);
 });
 
-// uses the get method to see if a user is authenticated for certain pages
-// this happens after a user is logged in
+// uses the get method to see if a user is authenticated to view certain pages
 app.get('/authrequired', (req, res) => {
   if (req.isAuthenticated()) {
-    res.send('you hit the authentication endpoint\n')
+    res.send('you hit the authentication endpoint\n');
   } else {
     res.redirect('/');
   }
@@ -87,18 +101,26 @@ app.get('/', (request, response) => {
   response.send(200);
 });
 
-//on login compare user data to login attempt
-app.post('/login', (req, res) => {
+// uses local strategy to login
+app.post('/login', (req, res, callback) => {
   passport.authenticate('local', (err, user, info) => {
+    if (info) {
+      return res.send(info.message);
+    }
+    if (err) {
+      return callback(err);
+    }
+    if (!user) {
+      return res.redirect('/login');
+    }
     req.login(user, (error) => {
-      res.send('you were logged in');
+      if (error) {
+        return callback(error);
+      }
+      res.redirect('/authrequired');
     });
   })(req, res);
-
-  //if valid login, redirect to '/search'
-  //else keep at login
-
-})
+});
 
 app.get('/login', (req, res) => {
   console.log(req.sessionID);
