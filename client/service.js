@@ -7,10 +7,14 @@ angular.module('app')
         username, password,
       })
         .then((response) => {
-          console.log(response, `${username} succesfully logged in!`);
+          if (response.message === 'logged in successfully') {
+            console.log(response, `${username} succesfully logged in!`);
+          } else {
+            console.log(`failed to login ${username}`);
+          }
         })
         .catch((error) => {
-          console.error(error, `failed to login ${username}`);
+          console.error(error);
         });
     };
 

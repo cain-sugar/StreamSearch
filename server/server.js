@@ -28,7 +28,7 @@ app.use(session({
     return uuid();
   },
   store: new FileStore(),
-  secret: 'keyboard cat',
+  secret: 'cain is sour, never sweet',
   resave: false,
   saveUninitialized: true,
 }));
@@ -36,28 +36,22 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// const users = [{ id: 983, username: 'tonild', password: 'erika31' }];
-
 
 // passport strategy to authenticate username and password
 passport.use(new LocalStrategy({
   usernameField: 'username',
   passwordField: 'password',
 }, (username, password, done) => {
-  db.User.findOne({ username })
+  db.User.findOne({ username, password })
     .then((user) => {
       if (user.user_name !== username) {
-        return done(null, false, { message: 'Incorrect username or password' });
+        return done(null, false, { message: 'Incorrect usernmae'});
       }
       if (!bcrypt.compare(password, user.hashed_password)) {
         return done(null, false, { message: 'Incorrect password' });
       }
       return done(null, user, { message: 'logged in successfully' });
     });
-  // const user = users[0];
-  // if (username === user.username && password === user.password) {
-  //   return callback(null, user);
-  // }
 }));
 
 // user id is saved to the session file store here
@@ -75,9 +69,6 @@ passport.deserializeUser((id, done) => {
     .then((response) => {
       return done(null, response);
     });
-  // request.session.passport.user
-  // const user = users[0].id === id ? users[0] : false;
-  // callback(null, user);
 });
 
 // uses the get method to see if a user is authenticated to view certain pages
@@ -97,8 +88,8 @@ app.get('/', (request, response) => {
 // uses local strategy to login
 app.post('/login', (req, res, callback) => {
   passport.authenticate('local', (err, user, info) => {
-    if (user) {
-      return res.send(user);
+    if (info) {
+      return res.send(info);
     }
     if (err) {
       return callback(err);
