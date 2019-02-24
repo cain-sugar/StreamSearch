@@ -6,6 +6,7 @@
       <img ng-src="assets/serviceLogos/login-signup-background.png" class="login-signup-img">
       <img ng-src="assets/serviceLogos/grey-bod-top.png" class="login-signup-img-two">
       <input ng-model='$ctrl.username' type='text' style="width: 30%" placeholder="Username" class="centered-text-username grey-text text-darken-4 grey lighten-4" required /><br>
+      <span ng-if="$ctrl.taken" type='text' class="centered-text-alert red darken-1">That username is already taken!</span><br>
       <input ng-model='$ctrl.fullname' type='text' style="width: 30%" placeholder="Full Name" class="centered-text-password grey-text text-darken-4 grey lighten-4" required /><br>
       <input ng-model='$ctrl.password' type='text' style="width: 30%" placeholder="Password" class="centered-text-3 grey-text text-darken-4 grey lighten-4" required /><br>
       <!-- <input ng-model='$ctrl.country' type='text' style="width: 30%" placeholder="Country" class="centered-text-4" required /><br> -->

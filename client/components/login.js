@@ -1,7 +1,7 @@
 angular.module('app')
   .component('login', {
     bindings: {
-      path: '<',
+      user: '<',
     },
     controller(Serve, $location) {
       this.username = null;

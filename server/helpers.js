@@ -1,12 +1,12 @@
 const apis = require('./request');
 
-let getMovies = async (query) => {
+const getMovies = async (query) => {
   const utelly = await apis.utellyGet(query);
   const kitsu = await apis.anime(query);
   const movieDB = await apis.movies(query);
   const titles = utelly.results.map(movie => movie.name);
   const movies = movieDB.results.reduce((a, b) => {
-    if (titles.includes(b.title) && b.vote_count) {
+    if (b && titles.includes(b.title) && b.vote_count) {
       a.push({
         title: b.title,
         poster: `http://image.tmdb.org/t/p/w780/${b.poster_path}`,
@@ -18,6 +18,23 @@ let getMovies = async (query) => {
     }
     return a;
   }, []);
+  if (movies.length < 5) {
+    const anim = kitsu.data.map((anime) => {
+      let endpoint = '';
+      if (anime.attributes.titles.en_us) {
+        endpoint = anime.attributes.titles.en_us.split(' ').join('-');
+      }
+      return ({
+        title: anime.attributes.titles.en_us,
+        poster: anime.attributes.posterImage.small,
+        overview: anime.attributes.synopsis,
+        services: [{ display_name: 'Crunchyroll', url: `https://www.crunchyroll.com/${endpoint}` }],
+      });
+    });
+    for (let i = 0; movies.length < 5; i += 1) {
+      movies.push(anim[i]);
+    }
+  }
   return movies;
 };
 

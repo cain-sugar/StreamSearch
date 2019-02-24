@@ -24,7 +24,6 @@ const movieDbGet = ({ searchTerm, type }) => {
   //       api_key: process.env.MDB,
   //       query: query.query,
   //       sort_by: query.sort_by,
-  //       with_genres: query.with_genres,
   //     },
   //   });
   // }

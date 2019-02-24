@@ -3,10 +3,10 @@ angular.module('app')
     bindings: {},
     controller() {
       // this.data = window.data.Search;
-      this.getUserData = (data) => {
-      //  itemsService.getAll(function (data) {
-      //  this.items = data;
-      //  })
+      this.username = undefined;
+      this.setUsername = (name) => {
+        this.username = name;
+        console.log(this.username)
       };
       this.route = '/';
       this.login = () => {

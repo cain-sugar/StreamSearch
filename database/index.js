@@ -44,11 +44,8 @@ const Movie = db.define('Movie', {
   },
   movie_title: Sequelize.STRING,
   box_art: Sequelize.STRING,
-  release_year: Sequelize.INTEGER,
   favorite: Sequelize.BOOLEAN,
   watch_later: Sequelize.BOOLEAN,
-  recently_searched: Sequelize.BOOLEAN,
-
 });
 
 
@@ -73,6 +70,8 @@ const Movie_Service = db.define('Movie_Service', {
     },
   },
 });
+Movie_Service.belongsTo(Service);
+Movie_Service.belongsTo(Movie);
 Movie.belongsToMany(Service, { through: Movie_Service });
 Service.belongsToMany(Movie, { through: Movie_Service });
 
@@ -98,6 +97,11 @@ const User_Movie = db.define('User_Movie', {
     },
   },
 });
+User_Movie.belongsTo(User);
+User_Movie.belongsTo(Movie);
+User.belongsToMany(Movie, { through: User_Movie });
+Movie.belongsToMany(User, { through: User_Movie });
+
 
 const User_Service = db.define('User_Service', {
   id_user_service: {
@@ -125,13 +129,15 @@ User_Service.belongsTo(Service);
 User.belongsToMany(Service, { through: User_Service });
 Service.belongsToMany(User, { through: User_Service });
 
-db.sync({ });
-//force: true
 
-const usernameInDb = (username) => {
-  User.findOne({ user_name: username });
+
+// db.sync({ force: true });
+// force: true
+
+const usernameInDb = async (username) => {
+  const user = await User.findOne({ where: { user_name: username } });
+  return user;
 };
-
 
 db
   .authenticate()
@@ -189,27 +195,89 @@ const userServiceHelperFunc = (req, cb) => {
     });
 };
 
-// let userid = (`SELECT id_user FROM users WHERE user_name="${username}"` );
-// let userid = (users.findAll({where: {user_name="`${username}`"}}));
-// let servicesID = (`SELECT ServiceIdService FROM user_services WHERE UserIdUser ="${userid}" `);
-// let servicesID = user_services.findOne({where:{UserIdUser="`${userid}"}, attributes:[id_user_services,[ServiceIdService, UserIdUser]]})
-// let services = (`SELECT * FROM services WHERE id_service=${servicesID}`);
-// let services = (services.findAll({where: {id_services="`${servicesID}`"}}))
+const getUserServices = (username, cb) => {
+  User.findOne({ where: { user_name: username } })
+    .then((user) => {
+      User_Service.findOne({
+        where: { UserIdUser: user.id_user },
+        attributes: ['ServiceIdService'],
+      })
+        .then(uService => Service.findOne({ where: { id_service: uService.ServiceIdService } }))
+        .then((service) => {
+          cb(service.dataValues);
+        });
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
 
-// const getUserInfo = (req, callback) => {
-//   const username = req.body.username;
-//   const userid = User.findAll({ where: { user_name: `${username}` } });
-//   const servicesID = User_Service.findOne({ where: { UserIdUser: `${userid}` }, attributes: ['id_user_service', ['ServiceIdService', 'UserIdUser']] });
-//   const services = (Service.findAll({ where: { id_service: `${servicesID}` } }));
-//   console.log(services);
-// };
+const funcToMakeUserMovieTable = (req, cb) => {
+  const username = req.body.user;
+  const title = req.body.resultMovieName;
+  Movie.findOne({ where: { movie_title: title } })
+    .then((movie) => {
+      User.findOne({ where: { user_name: username } })
+        .then((user) => {
+          user.addMovie(movie, { through: User_Movie });
+        });
+    })
+    .catch((err) => {
+      cb(err);
+    });
+};
+
+
+const saveMovieHelperFunc = (req, callback) => {
+  const movie = req.body.resultMovieName;
+  const src = req.body.resultSrc;
+  const favorited = req.body.favorite;
+  const watchLater = req.body.watchLater;
+  const services = req.body.services;
+  const crunchyroll = services.crunchyroll;
+  const googleplay = services.googleplay;
+  const hulu = services.hulu;
+  const iTunes = services.iTunes;
+  const netflix = services.netflix;
+  const primevideo = services.primevideo;
+  const username = req.body.user;
+
+  Promise.all([
+    Movie.create({
+      movie_title: movie,
+      box_art: src,
+      favorite: favorited,
+      watch_later: watchLater,
+    }),
+    Service.create({
+      service_crunchyroll: crunchyroll,
+      service_googleplay: googleplay,
+      service_hulu: hulu,
+      service_iTunes: iTunes,
+      service_netflix: netflix,
+      service_primevideo: primevideo,
+    }),
+  ]).then(([pMovie, pServices]) => {
+    pMovie.addService(pServices, { through: Movie_Service });
+  }).then(() => {
+    funcToMakeUserMovieTable(req, (response) => {
+      callback(response);
+    });
+  })
+    .catch((err) => {
+      callback(err);
+    });
+};
 
 module.exports = {
   User,
   Service,
   usernameInDb,
   userServiceHelperFunc,
-  // getUserInfo,
+  saveMovieHelperFunc,
+  getUserServices,
+  saveMovieHelperFunc,
+  funcToMakeUserMovieTable,
 };
 
 
