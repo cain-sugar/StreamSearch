@@ -63,7 +63,7 @@
 .centered-text-username {
   background-color: whitesmoke;
   position: absolute;
-  top: 30%;
+  top: 20%;
   left: 35%;
   /* transform: translate(-50%, -50%); */
 }
@@ -78,7 +78,7 @@
 
 .centered-text-password {
   position: absolute;
-  top: 40%;
+  top: 35%;
   left: 35%;
   /* transform: translate(-50%, -50%); */
 }
@@ -106,7 +106,6 @@
 
 .signin-header {
   position: absolute;
-  top: 3%;
   left: 30%;
   color: white;
 }
