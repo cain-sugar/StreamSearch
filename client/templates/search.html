@@ -23,37 +23,37 @@
       <a class="carousel-item" href="javascript:void(0);">
         <div>{{$ctrl.data[0].title}}</div>
         <br />
-        <i class="material-icons" ng-click="$ctrl.favoritedMovie()">favorite</i>
-      <i class="material-icons" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
+        <i class="material-icons" ng-if="$ctrl.data[0].title" ng-click="$ctrl.favoritedMovie()">favorite</i>
+      <i class="material-icons" ng-if="$ctrl.data[0].title" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
         <div ng-click="$ctrl.target !== '0' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="0">
         <img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[0].poster}}">
       </div>
       </a>
       <a class="carousel-item" href="javascript:void(0);">
         {{$ctrl.data[1].title}}
-        <i class="material-icons" ng-click="$ctrl.favoritedMovie()">favorite</i>
-      <i class="material-icons" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
+        <i class="material-icons" ng-if="$ctrl.data[1].title" ng-click="$ctrl.favoritedMovie()">favorite</i>
+      <i class="material-icons" ng-if="$ctrl.data[1].title" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
         <div ng-click="$ctrl.target !== '1' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="1">
             <img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[1].poster}}">
           </div></a>
       <a class="carousel-item" href="javascript:void(0);">
         {{$ctrl.data[2].title}}
-        <i class="material-icons" ng-click="$ctrl.favoritedMovie()">favorite</i>
-      <i class="material-icons" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
+        <i class="material-icons" ng-if="$ctrl.data[2].title" ng-click="$ctrl.favoritedMovie()">favorite</i>
+      <i class="material-icons" ng-if="$ctrl.data[2].title" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
         <div ng-click="$ctrl.target !== '2' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="0">
             <img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[2].poster}}">
           </div></a>
       <a class="carousel-item" href="javascript:void(0);">
         {{$ctrl.data[3].title}}
-        <i class="material-icons" ng-click="$ctrl.favoritedMovie()">favorite</i>
-      <i class="material-icons" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
+        <i class="material-icons" ng-if="$ctrl.data[3].title" ng-click="$ctrl.favoritedMovie()">favorite</i>
+      <i class="material-icons" ng-if="$ctrl.data[3].title" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
         <div ng-click="$ctrl.target !== '3' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="0">
             <img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[3].poster}}">
           </div></a>
       <a class="carousel-item" href="javascript:void(0);">
         {{$ctrl.data[4].title}}
-        <i class="material-icons" ng-click="$ctrl.favoritedMovie()">favorite</i>
-      <i class="material-icons" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
+        <i class="material-icons" ng-if="$ctrl.data[4].title" ng-click="$ctrl.favoritedMovie()">favorite</i>
+      <i class="material-icons" ng-if="$ctrl.data[4].title" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
         <div ng-click="$ctrl.target !== '4' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="0">
             <img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[4].poster}}">
           </div></a>
