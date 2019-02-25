@@ -20,26 +20,43 @@
   <button ng-click="$ctrl.searchFor(searchTerm, type)">Search the streams!</button>
   
   <div class="carousel" class={{$ctrl.ignore}}>
-      <a class="carousel-item" ng-click="$ctrl.target !== '0' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="0" href="javascript:void(0);">
-        {{$ctrl.data[0].title}}
+      <a class="carousel-item" href="javascript:void(0);">
+        <div>{{$ctrl.data[0].title}}</div>
+        <br />
+        <i class="material-icons" ng-click="$ctrl.favoritedMovie()">favorite</i>
+      <i class="material-icons" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
+        <div ng-click="$ctrl.target !== '0' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="0">
         <img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[0].poster}}">
+      </div>
       </a>
-      <a class="carousel-item" ng-click="$ctrl.target !== '1' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="1" href="javascript:void(0);">
+      <a class="carousel-item" href="javascript:void(0);">
         {{$ctrl.data[1].title}}
-        <img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[1].poster}}">
-      </a>
-      <a class="carousel-item" ng-click="$ctrl.target !== '2' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="2" href="javascript:void(0);">
+        <i class="material-icons" ng-click="$ctrl.favoritedMovie()">favorite</i>
+      <i class="material-icons" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
+        <div ng-click="$ctrl.target !== '1' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="1">
+            <img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[1].poster}}">
+          </div></a>
+      <a class="carousel-item" href="javascript:void(0);">
         {{$ctrl.data[2].title}}
-        <img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[2].poster}}">
-      </a>
-      <a class="carousel-item" ng-click="$ctrl.target !== '3' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="3" href="javascript:void(0);">
+        <i class="material-icons" ng-click="$ctrl.favoritedMovie()">favorite</i>
+      <i class="material-icons" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
+        <div ng-click="$ctrl.target !== '2' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="0">
+            <img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[2].poster}}">
+          </div></a>
+      <a class="carousel-item" href="javascript:void(0);">
         {{$ctrl.data[3].title}}
-        <img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[3].poster}}">
-      </a>
-      <a class="carousel-item" ng-click="$ctrl.target !== '4' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="4" href="javascript:void(0);">
+        <i class="material-icons" ng-click="$ctrl.favoritedMovie()">favorite</i>
+      <i class="material-icons" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
+        <div ng-click="$ctrl.target !== '3' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="0">
+            <img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[3].poster}}">
+          </div></a>
+      <a class="carousel-item" href="javascript:void(0);">
         {{$ctrl.data[4].title}}
-        <img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[4].poster}}">
-      </a>
+        <i class="material-icons" ng-click="$ctrl.favoritedMovie()">favorite</i>
+      <i class="material-icons" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
+        <div ng-click="$ctrl.target !== '4' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="0">
+            <img class="materialboxed" ng-if="$ctrl.data.length" width="200" ng-src="{{$ctrl.data[4].poster}}">
+          </div></a>
     </div>
   </div>
   <a class="service" href="{{$ctrl.data[$ctrl.targ].services[0].url}}">{{$ctrl.data[$ctrl.targ].services[0].display_name}}</a><br />
