@@ -140,7 +140,7 @@ User.belongsToMany(Service, { through: User_Service });
 Service.belongsToMany(User, { through: User_Service });
 
 // Clears the database
-// db.sync({ force: true }); 
+// db.sync({ force: true });
 // force: true
 
 const getUsernameFromSession = async (req) => {
@@ -183,7 +183,7 @@ const userServiceHelperFunc = async (req, cb) => {
   // Services End ///////////////////////////
 
   // Users //////////////////////////////
-  const username = await getUsernameFromSession(req);
+  const username = req.body.username;
   const country = req.body.country;
   const fullname = req.body.fullname;
   const salt = bcrypt.genSaltSync(8);
@@ -351,7 +351,7 @@ const funcToToggleServices = async (req, cb) => {
 
 const saveUserSession = async (req, callback) => {
   const session = req.sessionID;
-  const username = await getUsernameFromSession(req);
+  const username = req.body.username;
   User.update(
     { user_session: session },
     { where: { user_name: username } },
