@@ -231,3 +231,8 @@ h1.title.ng-binding {
 .profile-page-header {
   width: 500px;
 }
+
+.white-text-name {
+  font-size: 20px;
+  color: white; 
+}
