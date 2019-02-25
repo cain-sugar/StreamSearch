@@ -19,6 +19,7 @@
   </form>
   <button ng-click="$ctrl.searchFor(searchTerm, type)">Search the streams!</button>
   
+  
   <div class="carousel" class={{$ctrl.ignore}}>
       <a class="carousel-item" ng-click="$ctrl.target !== '0' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="0" href="javascript:void(0);">
         {{$ctrl.data[0].title}}
@@ -49,6 +50,6 @@
 <h1 ng-if="$ctrl.expanded" class="title">{{$ctrl.data[$ctrl.target].title}}</h1>
 <p ng-if="$ctrl.expanded" class="description">{{$ctrl.data[$ctrl.target].overview}}</p>
 
-<i class="material-icons" ng-click="$ctrl.favoritedMovie()">favorite</i>
-<i class="material-icons" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
+<i class="material-icons" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.favoritedMovie()">favorite</i>
+  <i class="material-icons" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
 

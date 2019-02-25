@@ -78,11 +78,14 @@ app.get('/profile/:username/movies', (req, res) => {
 app.post('/signup', (req, res) => {
   // console.log(req.body);
   db.userServiceHelperFunc(req, (result) => {
-    if (result === 'success') {
-      res.status(201).send(`${req.body.username} succesfully registered!`);
+    if (result !== 'success') {
+      res.status(400).send(result);
       // redirect to '/search'
     } else {
-      res.status(400).send(result);
+      return req.session.regenerate(() => {
+        req.session.user = req.body.username;
+        res.status(201).send(`${req.body.username} succesfully registered!`);
+      });
     }
   });
 });

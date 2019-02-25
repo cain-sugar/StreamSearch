@@ -17,10 +17,15 @@ const getMovies = async (query) => {
       partial = b.title.replace('!', '');
     }
     let index;
+    let services;
     if (titles.indexOf(partial) < 0) {
       index = titles.indexOf(b.title);
+      if (index > 0) {
+        services = utelly.data.results[index].locations;
+      }
     } else {
       index = titles.indexOf(partial);
+      services = utelly.data.results[index].locations;
     }
     if (b && (titles.join('').includes(partial) || hulu.includes(b.title)) && b.popularity) {
       a.push({
@@ -28,7 +33,7 @@ const getMovies = async (query) => {
         poster: `http://image.tmdb.org/t/p/w780/${b.poster_path}`,
         backdrop: `http://image.tmdb.org/t/p/w780/${b.backdrop_path}`,
         overview: b.overview,
-        services: utelly.data.results[index].locations,
+        services,
         hulu: hulu.includes(b.title),
       });
       return a;
