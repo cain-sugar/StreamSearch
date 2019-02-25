@@ -243,3 +243,7 @@ h1.title.ng-binding {
     width: 30%;
     margin-top: 2%;
 }
+
+.greet-page {
+  background-color: #000000;
+}
