@@ -9,11 +9,12 @@ angular.module('app')
       this.fullname = null;
       this.password = null;
       this.country = null;
+      this.session = null;
 
       this.taken = false;
 
       this.createUser = (services) => {
-        Serve.signup(this.username, this.fullname, this.password, this.country, services, (response) => {
+        Serve.signup(this.username, this.fullname, this.password, this.country, services, this.session, (response) => {
           if (response === 'that username is already taken!') {
             this.taken = true;
           } else {

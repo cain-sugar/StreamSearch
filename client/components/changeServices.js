@@ -7,8 +7,8 @@ angular.module('app')
       // M.AutoInit();
 
       const selectServices = this;
-      this.username = 'Ablung';
-      Serve.getServices(this.username, (userInfo) => {
+      
+      Serve.getServices(Serve.username, (userInfo) => {
         const keys = Object.keys(userInfo);
         keys.forEach((key) => {
           if (userInfo[key] !== '1' && (key !== 'id_service' && (key !== 'createdAt' && key !== 'updatedAt'))) selectServices.serviceList[key.slice(8)] = !selectServices.serviceList[key.slice(8)];
@@ -26,7 +26,7 @@ angular.module('app')
 
       selectServices.clickedService = (service) => {
         selectServices.serviceList[service] = !selectServices.serviceList[service];
-        Serve.updateServices(service, this.username, selectServices.serviceList[service], (response) => {
+        Serve.updateServices(service, Serve.username, selectServices.serviceList[service], (response) => {
           if (response) {
             console.log('recieved something from db regarding patch request to toggle services');
           }

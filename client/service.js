@@ -18,9 +18,9 @@ angular.module('app')
         });
     };
 
-    this.signup = (username, fullname, password, country, services, callback) => {
+    this.signup = (username, fullname, password, country, services, session, callback) => {
       $http.post('/signup', {
-        username, fullname, password, country, services,
+        username, fullname, password, country, services, session,
       })
         .then((response) => {
           callback(response.data);
@@ -39,7 +39,6 @@ angular.module('app')
         .then(callback)
         .catch(callback);
     };
-
     
     this.favoritedMovie = (resultMovieName, resultSrc, favorite, watchLater, services, user, callback) => {
       $http.post('/favoritedMovie', {
