@@ -1,9 +1,5 @@
-.selected-service, .not-icon {
-  opacity: 0.30;
-}
-
-.icon {
-  margin-left: 1.5em;
+.selected-service {
+  height: 500px;
 }
 
 .logo {
@@ -15,37 +11,21 @@
   mix-blend-mode: lighten;
 }
 
-.logo-search-profile {
-  height: 100px;
-  display: block;
-  width: relative;
-  mix-blend-mode: lighten;
-  margin-left: 1.5em;
-}
-
-.material-icons {
-  color: gold;
-  margin-left: 2.5em;
-}
-
 .greet{
   float: middle;
-    margin-right: 150px;
+    margin-right: 70px;
   font-size: 30px;
-  margin-left: 11em;
+  margin-left: 3.5em;
 }
 
 .carousel {
   overflow: visible;
-  position: relative;
   height: 100%;
-  top: 5%;
-  left: 3%; 
 }
 
 .login-signup-img{
-  top: 5%;
-  left: 27%;
+  top: 15%;
+  left: 22%;
   height: 500px;
   width: relative;
   position: absolute;
@@ -53,8 +33,8 @@
 }
 
 .login-signup-img-two{
-  top: 15%;
-  left: 30%;
+  top: 25%;
+  left: 25%;
   position: absolute;
   height: 400px;
   opacity: 0.80;
@@ -64,152 +44,25 @@
 .centered-text-username {
   background-color: whitesmoke;
   position: absolute;
-  top: 30%;
-  left: 35%;
-  /* transform: translate(-50%, -50%); */
-}
-
-.centered-text-alert {
-  background-color: whitesmoke;
-  position: absolute;
-  top: 35.5%;
-  left: 35%;
+  top: 40%;
+  left: 30%;
   /* transform: translate(-50%, -50%); */
 }
 
 .centered-text-password {
   position: absolute;
-  top: 40%;
-  left: 35%;
-  /* transform: translate(-50%, -50%); */
-}
-
-.centered-text-3 {
-  position: absolute;
   top: 50%;
-  left: 35%;
-  /* transform: translate(-50%, -50%); */
-}
-
-.centered-text-4 {
-  position: absolute;
-  top: 60%; 
-  left: 35%;
+  left: 30%;
   /* transform: translate(-50%, -50%); */
 }
 
 .login-header {
   position: absolute;
-  top: 3%;
-  left: 30%;
+  top: 13%;
+  left: 25%;
   color: white;
 }
 
-.signin-header {
-  position: absolute;
-  top: 3%;
-  left: 30%;
-  color: white;
-}
-
-.country-header {
-  position: absolute;
-  top: 55%;
-  left: 35%;
-  color: rgb(211, 209, 209);
-}
-
-.collapsible-header {
-  position: absolute;
-  top: 70%;
-  left: 80%;
-}
-
-.collapsible-body {
-  position: absolute;
-  top: 75%;
-  left: 20%
-}
-
-.collapsible{
-  background-color: black;
-  /* display:none; */
-}
-
-.label {
-  font-size: 1.0rem;
-  color: black;
-  position: absolute;
-  top: 63%;
-  left: 43%;
-}
-
-.label2 {
-  color: black;
-  font-size: 2.0rem;
-}
-
-[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
-  background-color: gold;
-  border: black;
-}
-
-[type="radio"]:not(:checked)+span, [type="radio"]:checked+span {
-  font-size: 2.0rem;
-}
-
-
-.collapsible {
-  border-top: none;
-}
-
-
-input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
-  font-size: 25px;
-}
-
-.search-input-movie{
-  background-color: whitesmoke;
-  position: absolute;
-  top: 5%;
-  left: 30%;
-}
-
-.btn-large {
-  position: absolute;
-  top: 55%;
-  left: 45%;
-}
-
-.profile-page-header{
-  position: relative;
-  top: 10%;
-  left: 30%;
-  color: white;
-}
-
-.group1 {
-  left: 1.5em;
-}
-
-.user-view {
-  background-image: url("assets/serviceLogos/hamburger-tab-background.png");
-}
-
-a {
-  color: #ffd700;
-  text-decoration: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-p.description.ng-binding {
-  width: 300px;
-  position: absolute;
-  color: ivory;
-}
-
-h1.title.ng-binding {
-  width: 300px;
-    position: relative;
-    color: ivory;
-}
+/* .login-button {
+  color: #C59942;
+} */
