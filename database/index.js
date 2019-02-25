@@ -140,17 +140,17 @@ User.belongsToMany(Service, { through: User_Service });
 Service.belongsToMany(User, { through: User_Service });
 
 // Clears the database
-// db.sync({ force: true });
+// db.sync({ force: true }); 
 // force: true
 
-const getUsernameFromSession = (req) => {
+const getUsernameFromSession = async (req) => {
   let username;
   const sessionID = req.sessionID;
-  User.findOne({ where: { user_session: sessionID } })
+  await User.findOne({ where: { user_session: sessionID } })
     .then((response) => {
-      console.log(response);
       username = response.dataValues.user_name;
     });
+  console.log(username);
   return username;
 };
 
@@ -171,7 +171,7 @@ db
   .done();
 
 // Helper Function to populate service and user tables and join table///////////////////////////////
-const userServiceHelperFunc = (req, cb) => {
+const userServiceHelperFunc = async (req, cb) => {
   // Services //////////////////////////////
   const services = req.body.services;
   const crunchyroll = services.crunchyroll;
@@ -183,7 +183,7 @@ const userServiceHelperFunc = (req, cb) => {
   // Services End ///////////////////////////
 
   // Users //////////////////////////////
-  const username = req.body.username;
+  const username = await getUsernameFromSession(req);
   const country = req.body.country;
   const fullname = req.body.fullname;
   const salt = bcrypt.genSaltSync(8);
@@ -259,8 +259,8 @@ const getUserMovies = (username, cb) => {
     });
 };
 
-const funcToMakeUserMovieTable = (req, cb) => {
-  const username = req.body.user;
+const funcToMakeUserMovieTable = async (req, cb) => {
+  const username = await getUsernameFromSession(req);
   const title = req.body.resultMovieName;
   Movie.findOne({ where: { movie_title: title } })
     .then((movie) => {
@@ -275,7 +275,7 @@ const funcToMakeUserMovieTable = (req, cb) => {
 };
 
 
-const saveMovieHelperFunc = (req, callback) => {
+const saveMovieHelperFunc = async (req, callback) => {
   const movie = req.body.resultMovieName;
   const src = req.body.resultSrc;
   const favorited = req.body.favorite;
@@ -287,7 +287,7 @@ const saveMovieHelperFunc = (req, callback) => {
   const iTunes = services.iTunes;
   const netflix = services.netflix;
   const primevideo = services.primevideo;
-  const username = req.body.user;
+  const username = await getUsernameFromSession(req);
 
   Promise.all([
     Movie.create({
@@ -320,9 +320,9 @@ const funcToToggleServices = async (req, cb) => {
   const services = req.body.service;
   const service_service = `service_${req.body.service}`;
   const value = req.body.value;
-  // const username = await getUsernameFromSession(req);
+  const username = await getUsernameFromSession(req);
 
-  User.findOne({ where: { user_name: getUsernameFromSession(req) } }, services, service_service, value)
+  User.findOne({ where: { user_name: username } }, services, service_service, value)
     .then((user) => {
       User_Service.findOne({
         where: { UserIdUser: user.id_user },
@@ -349,9 +349,9 @@ const funcToToggleServices = async (req, cb) => {
     });
 };
 
-const saveUserSession = (req, callback) => {
+const saveUserSession = async (req, callback) => {
   const session = req.sessionID;
-  const username = req.body.username;
+  const username = await getUsernameFromSession(req);
   User.update(
     { user_session: session },
     { where: { user_name: username } },
