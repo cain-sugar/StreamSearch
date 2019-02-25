@@ -233,6 +233,11 @@ h1.title.ng-binding {
   width: 500px;
 }
 
+.white-text-name {
+  font-size: 20px;
+  color: white; 
+}
+
 .sign-up-button {
     left: 39%;
     width: 30%;

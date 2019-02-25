@@ -4,15 +4,15 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 const db = new Sequelize({
-  host: process.env.AWS_HOST || 'localhost',
-  port: 3306,
-  username: process.env.AWS_USER || 'root',
-  password: process.env.AWS_PASS || '',
-  database: process.env.AWS_DB || 'streamsearch',
+  host: 'localhost',
+  // port: 3000,
+  username: 'root',
+  password: '',
+  database: 'streamsearch',
   dialect: 'mysql',
-  dialectOptions: {
-    ssl: 'Amazon RDS',
-  },
+  // dialectOptions: {
+  //   ssl: 'Amazon RDS',
+  // },
 });
 
 const User = db.define('User', {
