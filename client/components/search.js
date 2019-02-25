@@ -64,11 +64,16 @@ angular.module('app')
           netflix: false,
           primevideo: false,
         };
-        this.data[this.target].services.forEach((service) => {
-          if (Object.keys(options).includes(service.display_name)) {
-            options[service.display_name] = true;
-          }
-        });
+        if (this.data[this.target].services) {
+          this.data[this.target].services.forEach((service) => {
+            if (Object.keys(options).includes(service.display_name)) {
+              options[service.display_name] = true;
+            }
+          });
+        }
+        if (this.data[this.target].hulu) {
+          options.hulu = true;
+        }
         return options;
       };
 

@@ -12,9 +12,9 @@
     <h3 class='login-header'>Login</h3>
     <img ng-src="assets/serviceLogos/login-signup-background.png" class="login-signup-img">
     <img ng-src="assets/serviceLogos/grey-bod-top.png" class="login-signup-img-two">
-      <input class="centered-text-username grey lighten-4" ng-model="$ctrl.username"  type="text" style="width: 30%" placeholder="Username" required /><br>
+      <input class="centered-text-username grey lighten-4" ng-model="$ctrl.username"  type="text" style="width: 370px" placeholder="Username" required /><br>
       <span ng-if="$ctrl.wrong" type='text' class="centered-text-alert red darken-1">Incorrect username or password</span><br>
-      <input class="centered-text-password grey lighten-4" ng-model="$ctrl.password"  type="text" style="width: 30%" placeholder="Password" required /><br>
+      <input class="centered-text-password grey lighten-4" ng-model="$ctrl.password"  type="text" style="width: 370px" placeholder="Password" required /><br>
       <button class="waves-effect grey-text text-darken-4 amber accent-3 btn-large" type='button' ng-click='$ctrl.user($ctrl.username);$ctrl.login()'>Login</button>
   </form>
 </div>
