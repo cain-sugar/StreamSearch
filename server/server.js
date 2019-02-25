@@ -36,8 +36,16 @@ app.post('/login', (req, res) => {
           console.error(error);
           res.status(500).send('no such user or incorrect password!');
         } else if (response) {
-          return req.session.regenerate(() => { 
+          return req.session.regenerate(() => {
+            // Make an extra colum in the user table to store the sessionID
             req.session.user = req.body.username;
+            console.log(req.sessionID);
+            db.saveUserSession(req, (callback) => {
+              if (callback === 'good') {
+                console.log(callback);
+                // res.send(callback);
+              }
+            });
             res.send('good');
           });
         }

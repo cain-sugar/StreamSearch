@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
-
+// Uncomment line 143 to reset the database :)
 require('dotenv').config();
 
 const db = new Sequelize({
@@ -28,6 +28,7 @@ const User = db.define('User', {
   user_fullname: Sequelize.STRING,
   user_country: Sequelize.STRING,
   hashed_password: Sequelize.STRING.BINARY,
+  user_session: Sequelize.STRING.BINARY,
 });
 
 const Service = db.define('Service', {
@@ -142,6 +143,18 @@ Service.belongsToMany(User, { through: User_Service });
 // db.sync({ force: true });
 // force: true
 
+const getUsernameFromSession = (req) => {
+  let username;
+  const sessionID = req.sessionID;
+  User.findOne({ where: { user_session: sessionID } })
+    .then((response) => {
+      console.log(response);
+      username = response.dataValues.user_name;
+    });
+  return username;
+};
+
+
 const usernameInDb = async (username) => {
   const user = await User.findOne({ where: { user_name: username } });
   return user;
@@ -175,12 +188,14 @@ const userServiceHelperFunc = (req, cb) => {
   const fullname = req.body.fullname;
   const salt = bcrypt.genSaltSync(8);
   const hashPassword = bcrypt.hashSync(req.body.password, salt);
+  const session = null;
   // Users End ///////////////////////////
   User.create({
     user_name: username,
     user_fullname: fullname,
     hashed_password: hashPassword,
     user_country: country,
+    user_session: session,
   })
     .then(user => Promise.all([
       user,
@@ -301,13 +316,13 @@ const saveMovieHelperFunc = (req, callback) => {
     });
 };
 
-const funcToToggleServices = (req, cb) => {
+const funcToToggleServices = async (req, cb) => {
   const services = req.body.service;
   const service_service = `service_${req.body.service}`;
-  const username = req.body.username;
   const value = req.body.value;
+  // const username = await getUsernameFromSession(req);
 
-  User.findOne({ where: { user_name: username } }, services, service_service, value)
+  User.findOne({ where: { user_name: getUsernameFromSession(req) } }, services, service_service, value)
     .then((user) => {
       User_Service.findOne({
         where: { UserIdUser: user.id_user },
@@ -334,6 +349,22 @@ const funcToToggleServices = (req, cb) => {
     });
 };
 
+const saveUserSession = (req, callback) => {
+  const session = req.sessionID;
+  const username = req.body.username;
+  User.update(
+    { user_session: session },
+    { where: { user_name: username } },
+  )
+    .then((response) => {
+      console.log(response);
+      callback('good');
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 
 module.exports = {
   User,
@@ -345,6 +376,8 @@ module.exports = {
   getUserMovies,
   funcToMakeUserMovieTable,
   funcToToggleServices,
+  saveUserSession,
+  getUsernameFromSession,
 };
 
 
