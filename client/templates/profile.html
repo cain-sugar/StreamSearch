@@ -2,13 +2,16 @@
   <sidebar></sidebar>
   <div class="profile-favorites">
     <h2 class='profile-page-header'>Favorites</h2>
+    <img ng-repeat="movie in $ctrl.favorites" movie="movie" height=200 width=relative
+      ng-src="{{movie.box_art}}"/>
   </div>
   <div class="profile-watchlist">
     <h2 class='profile-page-header'>Watchlist</h2>
+    <img ng-repeat="movie in $ctrl.watchList" movie="movie" height=200 width=relative 
+    ng-src="{{movie.box_art}}" />
   </div>
   <div class="profile-services">
     <h2 class='profile-page-header'>My Services</h2>
-      <img ng-repeat="service in $ctrl.services" service="service" height=60 width=relative class="icon"
-        ng-src="assets/serviceLogos/{{service}}.png"/>
+    <change-services service='$ctrl.changeService' class='icon'/>
   </div>
 </div>

@@ -1,0 +1,10 @@
+<ul class="collapsible">
+  <li>
+      <img ng-repeat="(service, hasService) in $ctrl.serviceList" service="service" height=60 width=relative
+        class="icon"
+        ng-src="assets/serviceLogos/{{service}}.png"
+        ng-click="$ctrl.service(service);$ctrl.clickedService(service)"
+        ng-class="{'selected-service': $ctrl.serviceList[service]}"
+        />
+  </li>
+</ul>

@@ -41,7 +41,8 @@ angular.module('app')
         .catch(callback);
     };
 
-    this.favoritedMovie = (resultMovieName, resultSrc, favorite, watchLater, services, user) => {
+    
+    this.favoritedMovie = (resultMovieName, resultSrc, favorite, watchLater, services, user, callback) => {
       $http.post('/favoritedMovie', {
         resultMovieName, resultSrc, favorite, watchLater, services, user,
       })
@@ -54,16 +55,39 @@ angular.module('app')
     };
 
 
-    this.getInfo = (username, cb) => {
-      $http.get(`/profile/${username}`, {
+    this.getServices = (username, cb) => {
+      $http.get(`/profile/${username}/favorites`, {
         params: { username },
       })
         .then((response) => {
           cb(response.data);
-          console.log(response, 'response from request for profile info');
         })
         .catch((error) => {
           console.error(error);
+        });
+    };
+
+    this.getMovies = (username, cb) => {
+      $http.get(`/profile/${username}/movies`, {
+        params: { username },
+      })
+        .then((response) => {
+          cb(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    this.updateServices = (service, username, value, callback) => {
+      $http.patch('/profile', {
+        service, username, value,
+      })
+        .then((response) => {
+          callback(response);
+        })
+        .catch((error) => {
+          console.log('error sending info back to service.js (service.js (73-83))');
         });
     };
   });

@@ -1,9 +1,11 @@
 const express = require('express');
 
 const app = express();
+
+const session = require('express-session');
+
 const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
-const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const uuid = require('uuid/v4');
 const bcrypt = require('bcrypt');
@@ -13,7 +15,8 @@ const db = require('../database/index.js');
 const utellySample = require('../sampledata/utelly');
 
 
-// add and configure middleware
+require('dotenv').config();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('client'));
@@ -58,6 +61,21 @@ passport.use(new LocalStrategy({
 passport.serializeUser((user, done) => {
   return done(null, user.id_user); // id_user
 });
+// Get User Profile information /////////////////////////////////////////////////////////////////
+app.get('/profile/:username/favorites', (req, res) => {
+  const { username } = req.query;
+  db.getUserServices(username, (result) => {
+    res.status(200).send(result);
+  });
+});
+
+app.get('/profile/:username/movies', (req, res) => {
+  const { username } = req.query;
+  db.getUserMovies(username, (result) => {
+    res.status(200).send(result);
+  });
+});
+// Get User Profile information End//////////////////////////////////////////////////////////////
 
 // the user id passport is saved in the session file
 // retrieves the user profile based on id
@@ -78,6 +96,15 @@ app.get('/authrequired', (req, res) => {
   } else {
     res.redirect('/');
   }
+// activates when a user clicks the services on their profile
+app.patch('/profile', (req, res) => {
+  // should perform an update query to database
+  // should be able to add or remove services
+  console.log(req.body, 'server.js');
+  db.funcToToggleServices(req, (result) => {
+    console.log(result);
+  });
+  res.send('cool');
 });
 
 app.get('/', (request, response) => {
@@ -110,20 +137,12 @@ app.get('/login', (req, res) => {
   res.send('logged in');
 });
 
-app.post('/signup', (req, res) => {
-  console.log(req.sessionID);
-  console.log(req.body);
-  //Services//////////////////////////////////////////////
-
-
-  // db.Service.create({
-  //   service_crunchyroll: crunchyroll,
-  //   service_googleplay: googleplay,
-  //   service_hulu: hulu,
-  //   service_iTunes: iTunes,
-  //   service_netflix: netflix,
-  //   service_primevideo: primevideo
-  // });
+app.post('/favoritedMovie', (req, res) => {
+  db.saveMovieHelperFunc(req, (response) => {
+    console.log(response);
+    res.status(201).send();
+  });
+});
 
   // let services = req.body.services;
   // const crunchyroll = services.crunchyroll;
