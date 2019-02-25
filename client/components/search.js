@@ -50,6 +50,7 @@ angular.module('app')
       };
       this.setData = this.setData.bind(this);
       this.setTarget = (target) => {
+        console.log(target);
         const that = this;
         this.targ = target;
         setTimeout(() => { that.target = target; }, 1000);
