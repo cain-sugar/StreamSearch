@@ -11,6 +11,7 @@ const getMovies = async (query) => {
       b.title = b.name;
     }
     let partial = b.title;
+    let kit = kitsu.data.data.map(anime => anime.attributes.titles.en_us || anime.attributes.titles.en || anime.attributes.titles.ja_jp);
     if (b.title.includes('The ')) {
       partial = b.title.replace('The ', '');
     } else if (b.title.includes('!')) {
@@ -35,6 +36,7 @@ const getMovies = async (query) => {
         overview: b.overview,
         services,
         hulu: hulu.includes(b.title),
+        anime: kit.includes(b.title),
       });
       return a;
     }
