@@ -18,6 +18,7 @@ angular.module('app')
           if (response === 'that username is already taken!') {
             this.taken = true;
           } else {
+            // sets ui route location state to search component
             $location.path('search');
           }
         });

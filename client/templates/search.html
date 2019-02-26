@@ -1,15 +1,18 @@
 <div class="search">
   <img ng-src="assets/serviceLogos/logo-cropped.png" class="logo-search-profile">
+  <!-- sidebar component -->
   <sidebar></sidebar>
   <form class="search-form">
     <input class="search-input-movie grey lighten-4" placeholder="Search by title" style="width: 40%" ng-model="searchTerm">
     <span>I'm looking for...</span>
+    <!-- select to search for tv shows -->
     <p>
       <label>  
         <input name="group1" type="radio" ng-model="type" value="tv" checked />
         <span>A TV Show</span>
       </label>
     </p>
+    <!-- select to search for movies -->
     <p>
       <label>
         <input name="group1" type="radio" ng-model="type" value="movie"/>
@@ -17,9 +20,10 @@
       </label>
     </p>
   </form>
+  <!-- search button -->
   <button ng-click="$ctrl.searchFor(searchTerm, type)">Search the streams!</button>
   
-  
+  <!-- The poster carousel -->
   <div class="carousel" class={{$ctrl.ignore}}>
       <a class="carousel-item" ng-click="$ctrl.target !== '0' || $ctrl.isExpanded();$ctrl.setTarget($event.currentTarget.name)" name="0" href="javascript:void(0);">
         {{$ctrl.data[0].title}}
@@ -43,13 +47,18 @@
       </a>
     </div>
   </div>
+  <!-- is on hulu -->
+  <a class="service" ng-if="$ctrl.data[$ctrl.targ].hulu" href="https://www.hulu.com/">Hulu</a><br />
+  <!-- is on crunchyroll -->
+  <a class="service" ng-if="$ctrl.data[$ctrl.targ].anime" href="https://www.crunchyroll.com/">Crunchyroll</a><br />
+  <!-- utelly services -->
   <a class="service" href="{{$ctrl.data[$ctrl.targ].services[0].url}}">{{$ctrl.data[$ctrl.targ].services[0].display_name}}</a><br />
   <a class="service" href="{{$ctrl.data[$ctrl.targ].services[1].url}}">{{$ctrl.data[$ctrl.targ].services[1].display_name}}</a><br />
-  <a class="service" ng-if="$ctrl.data[$ctrl.targ].hulu" href="https://www.hulu.com/">Hulu</a><br />
   <a class="service" href="{{$ctrl.data[$ctrl.targ].services[2].url}}">{{$ctrl.data[$ctrl.targ].services[2].display_name}}</a>
+  <!-- if poster is clicked displays the following -->
 <h1 ng-if="$ctrl.expanded" class="title">{{$ctrl.data[$ctrl.target].title}}</h1>
 <p ng-if="$ctrl.expanded" class="description">{{$ctrl.data[$ctrl.target].overview}}</p>
-
+<!-- buttons for favorite and watch later -->
 <i class="material-icons" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.favoritedMovie()">favorite</i>
   <i class="material-icons" style="width: -webkit-fill-available;display: contents;" ng-click="$ctrl.watchLaterMovie()">watch_later</i>
 

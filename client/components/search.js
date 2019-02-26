@@ -1,5 +1,5 @@
 // import { setServers } from "dns";
-
+// poster data for init of carousel
 const data = {
   Search: [
     {
@@ -30,25 +30,37 @@ angular.module('app')
     bindings: {
     },
     controller(Serve) {
+      // init materialize components
       M.AutoInit();
+      // video data
       this.data = data.Search;
+      // current target
       this.targ = '0';
+      // current target after 1 second
       this.target = '0';
+      // when true displays movie descriptions
       this.expanded = false;
+      // changes expanded
       this.isExpanded = () => {
         this.expanded = !this.expanded;
       };
+      // sets the movie data
       this.setData = (data) => {
         this.data = data.data;
         M.AutoInit();
       };
+      // Search takes in term and type -> movie or tv
+      // !!!Important!!! type must be lowercase
       this.searchFor = (searchTerm, type) => {
         const query = { searchTerm, type };
         Serve.search(query, this.setData);
         this.target = 0;
         this.targ = 0;
       };
+      // bind this for callback purposes
       this.setData = this.setData.bind(this);
+      // to avoid an error which occured if user clicked in rapid succession
+      // a set timeout of one second exist
       this.setTarget = (target) => {
         console.log(target);
         const that = this;
@@ -77,7 +89,7 @@ angular.module('app')
         }
         return options;
       };
-
+      // add to favorites
       this.favoritedMovie = () => {
         const resultSrc = this.data[this.targ].poster;
         const resultMovieName = this.data[this.targ].title;
@@ -86,7 +98,7 @@ angular.module('app')
         const services = this.services();
         Serve.favoritedMovie(resultMovieName, resultSrc, favorite, watchLater, services, Serve.username);
       };
-
+      // add to watch later
       this.watchLaterMovie = () => {
         const resultSrc = this.data[this.target].poster;
         const resultMovieName = this.data[this.target].title;

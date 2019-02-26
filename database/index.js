@@ -190,7 +190,11 @@ const userServiceHelperFunc = (req, cb) => {
   const primevideo = services.primevideo;
   // Services End
 
+<<<<<<< HEAD
   // Users variable
+=======
+  // Users //////////////////////////////
+>>>>>>> a7fa3db4564bfda54fdfc635c0a76457e55104d4
   const username = req.body.username;
   const country = req.body.country;
   const fullname = req.body.fullname;
@@ -366,7 +370,7 @@ const funcToToggleServices = async (req, cb) => {
 
 const saveUserSession = async (req, callback) => {
   const session = req.sessionID;
-  const username = await getUsernameFromSession(req);
+  const username = req.body.username;
   User.update(
     { user_session: session },
     { where: { user_name: username } },

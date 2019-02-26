@@ -2,10 +2,12 @@
   <div ng-if="$ctrl.path === '/'" style="margin: 0 auto;width: fit-content;"><div class="image-container"></div>
   <img ng-src="assets/serviceLogos/logo.png" class="logo">
   <br>
+  <!-- super specific links required by ui route -->
   <a ui-sref="login" class="greet" style="color:'#C59942'" ui-sref-active="active">Login</a>
   <a ui-sref="signup" class="greet" style="color:'#C59942';padding-left: 277px;" ui-sref-active="active">Signup</a>
   <!-- <a ui-sref="search" class="greet" ng-style="{color:'#C59942'}" ui-sref-active="active">Search</a> -->
   </div>
+  <!-- div that loads the state loaded by ui route -->
   <div ui-view></div>
   <br>
   <br>
