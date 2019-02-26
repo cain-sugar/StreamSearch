@@ -3,6 +3,7 @@ angular.module('app')
     templateUrl: 'templates/sideBar.html',
     bindings: {},
     controller(Serve) {
+      // init materialize elements
       M.AutoInit();
       
       this.username = Serve.username;

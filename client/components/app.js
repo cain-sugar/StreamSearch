@@ -6,12 +6,9 @@ angular.module('app')
       this.username = undefined;
       this.setUsername = (name) => {
         this.username = name;
-        console.log(this.username)
+        console.log(this.username);
       };
       this.route = '/';
-      this.login = () => {
-        console.log('hi');
-      };
     },
     templateUrl: '../templates/app.html',
   });

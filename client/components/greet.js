@@ -5,6 +5,7 @@ angular.module('app')
       path: '<',
     },
     controller() {
+      // init materialize elements
       M.AutoInit();
     },
     templateUrl: '../templates/greet.html',
