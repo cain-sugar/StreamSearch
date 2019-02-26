@@ -12,9 +12,11 @@ angular.module('app')
       this.login = () => {
         Serve.login(this.username, this.password, (response) => {
           if (response !== 'good') {
+            // redirect to login if login fails
             $location.path('login');
             this.wrong = true;
           } else {
+            // send to search page on good login
             $location.path('search');
           }
         });
