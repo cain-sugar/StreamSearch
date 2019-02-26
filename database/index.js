@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
-// Uncomment line 143 to reset the database :)
+// Uncomment line 147 to reset the database :)
 require('dotenv').config();
 
 const db = new Sequelize({
@@ -15,6 +15,7 @@ const db = new Sequelize({
   // },
 });
 
+// User table in the database, cannot have duplicate username, session id stored here
 const User = db.define('User', {
   id_user: {
     type: Sequelize.INTEGER,
@@ -31,6 +32,7 @@ const User = db.define('User', {
   user_session: Sequelize.STRING.BINARY,
 });
 
+// Server table, holds services
 const Service = db.define('Service', {
   id_service: {
     type: Sequelize.INTEGER,
@@ -43,9 +45,9 @@ const Service = db.define('Service', {
   service_iTunes: Sequelize.STRING,
   service_netflix: Sequelize.STRING,
   service_primevideo: Sequelize.STRING,
-  // service_logo: Sequelize.STRING,
 });
 
+// Movie table. If a user favorites or hits watch later it will be saved as 0 or 1 (T/F)
 const Movie = db.define('Movie', {
   id_movie: {
     type: Sequelize.INTEGER,
@@ -58,7 +60,7 @@ const Movie = db.define('Movie', {
   watch_later: Sequelize.BOOLEAN,
 });
 
-
+// Join table for movie and service table
 const Movie_Service = db.define('Movie_Service', {
   id_service_movie: {
     type: Sequelize.INTEGER,
@@ -84,8 +86,9 @@ Movie_Service.belongsTo(Service);
 Movie_Service.belongsTo(Movie);
 Movie.belongsToMany(Service, { through: Movie_Service });
 Service.belongsToMany(Movie, { through: Movie_Service });
+// ^^Do not delete, needed to create join tables in sequalize
 
-
+// This continues below
 const User_Movie = db.define('User_Movie', {
   id_user_movie: {
     type: Sequelize.INTEGER,
@@ -138,11 +141,15 @@ User_Service.belongsTo(User);
 User_Service.belongsTo(Service);
 User.belongsToMany(Service, { through: User_Service });
 Service.belongsToMany(User, { through: User_Service });
+// Last join table, real work below vv
 
-// Clears the database
+// Clears and rebuilds the database
 // db.sync({ force: true });
-// force: true
 
+// Helper function that uses session to get the username. Session will not be changed
+// but when refreshing the page, you would have to re-login to access user information
+// It returns the username. Needs the async wait so it will retrieve the username b4 trying
+// to run function that uses username.
 const getUsernameFromSession = async (req) => {
   let username;
   const sessionID = req.sessionID;
@@ -154,12 +161,13 @@ const getUsernameFromSession = async (req) => {
   return username;
 };
 
-
+// Used in login func to check if username is in the db. Then runs the bcrypt compare
 const usernameInDb = async (username) => {
   const user = await User.findOne({ where: { user_name: username } });
   return user;
 };
 
+// Authenticates it? I guess its necessary lol
 db
   .authenticate()
   .then(() => {
@@ -170,9 +178,9 @@ db
   })
   .done();
 
-// Helper Function to populate service and user tables and join table///////////////////////////////
-const userServiceHelperFunc = async (req, cb) => {
-  // Services //////////////////////////////
+// Helper Function to populate service and user tables and join table
+const userServiceHelperFunc = (req, cb) => {
+  // Services variables
   const services = req.body.services;
   const crunchyroll = services.crunchyroll;
   const googleplay = services.googleplay;
@@ -180,16 +188,23 @@ const userServiceHelperFunc = async (req, cb) => {
   const iTunes = services.iTunes;
   const netflix = services.netflix;
   const primevideo = services.primevideo;
-  // Services End ///////////////////////////
+  // Services End
 
+<<<<<<< HEAD
+  // Users variable
+=======
   // Users //////////////////////////////
+>>>>>>> a7fa3db4564bfda54fdfc635c0a76457e55104d4
   const username = req.body.username;
   const country = req.body.country;
   const fullname = req.body.fullname;
   const salt = bcrypt.genSaltSync(8);
   const hashPassword = bcrypt.hashSync(req.body.password, salt);
   const session = null;
-  // Users End ///////////////////////////
+  // Users End
+
+  // Create user table, then creates service table. Promise.all is needed for creating
+  // the join table (need both values). Used at signup
   User.create({
     user_name: username,
     user_fullname: fullname,
@@ -218,6 +233,7 @@ const userServiceHelperFunc = async (req, cb) => {
     });
 };
 
+// Used in the user profile pages. Wind the services selected by the user, used for the profile page
 const getUserServices = (username, cb) => {
   User.findOne({ where: { user_name: username } })
     .then((user) => {
@@ -235,7 +251,8 @@ const getUserServices = (username, cb) => {
     });
 };
 
-const getUserMovies = (username, cb) => {
+const getUserMovies = async (req, cb) => {
+  const username = await getUsernameFromSession(req);
   User.findOne({ where: { user_name: username } })
     .then((user) => {
       User_Movie.findAll({ // <--needs to be findAll, then find all movies.
@@ -259,6 +276,8 @@ const getUserMovies = (username, cb) => {
     });
 };
 
+// Most things needed the async await because we needed to query the database for the user_name from the
+// session (req.sessionID). You can try it without it. We didn't have a lot of time to play with auth
 const funcToMakeUserMovieTable = async (req, cb) => {
   const username = await getUsernameFromSession(req);
   const title = req.body.resultMovieName;

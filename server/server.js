@@ -67,8 +67,8 @@ app.get('/profile/:username/favorites', (req, res) => {
 });
 
 app.get('/profile/:username/movies', (req, res) => {
-  const { username } = req.query;
-  db.getUserMovies(username, (result) => {
+  // const { username } = req.query;
+  db.getUserMovies(req, (result) => {
     res.status(200).send(result);
   });
 });
